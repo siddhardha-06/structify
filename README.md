@@ -103,9 +103,6 @@ npm run dev
 
 Open the app on the port Vite suggests (e.g., http://localhost:5173 or 5174).
 
-Pages to try:
-- http://localhost:5173/menu.html
-- http://localhost:5173/array.html (etc.)
 
 ### Backend (Express + MongoDB)
 
@@ -260,11 +257,7 @@ Exclude:
 
 ---
 
-## 📜 License & Attribution
 
-Educational clone inspired by VisuAlgo’s style. Not affiliated with the original site.
-
-Choose and add a LICENSE file before publishing (MIT is a common choice for projects like this).
 
 ---
 
