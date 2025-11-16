@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-export default function CodeModal({ slug, open, onClose, language = 'c', apiBase = 'http://localhost:4000' }){
+export default function CodeModal({ slug, open, onClose, language = 'c', apiBase = '' }){
   const [snippets, setSnippets] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
@@ -12,7 +12,11 @@ export default function CodeModal({ slug, open, onClose, language = 'c', apiBase
       setLoading(true)
       setError('')
       try {
-        const res = await fetch(`${apiBase}/api/ds/${slug}/snippets?lang=${language}`)
+        const isFile = typeof window !== 'undefined' && window.location?.protocol === 'file:'
+        const envBase = (import.meta?.env?.VITE_API_BASE ?? '')
+        const base = apiBase || envBase || (isFile ? 'http://localhost:4000' : '')
+        const url = `${base}/api/ds/${slug}/snippets?lang=${language}`.replace(/([^:])\/\/+/, '$1/')
+        const res = await fetch(url)
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const data = await res.json()
         if (!aborted) setSnippets(Array.isArray(data) ? data : [])

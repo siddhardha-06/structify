@@ -118,4 +118,26 @@ Will add a modal component that fetches `/api/ds/:slug` and displays code snippe
 ### License / Attribution
 
 Educational clone inspired by VisuAlgo style. Not affiliated with original site.
+ 
+ ### Quick MongoDB via Docker (Optional)
+ 
+ If you don't have MongoDB installed locally, you can spin it up with Docker:
+ 
+ ```powershell
+ cd .
+ docker compose up -d
+ 
+ # Verify Mongo is listening
+ Test-NetConnection -ComputerName localhost -Port 27017
+ 
+ # Start the server
+ cd server
+ node src/index.js
+ 
+ # Check health and DB status
+ Invoke-RestMethod -Uri "http://localhost:4000/api/health"
+ Invoke-RestMethod -Uri "http://localhost:4000/api/db-status" | ConvertTo-Json -Depth 5
+ ```
+ 
+ This runs MongoDB without authentication for local development and persists data in a Docker volume.
 

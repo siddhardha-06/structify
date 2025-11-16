@@ -3,15 +3,35 @@ import mongoose from 'mongoose';
 import { DataStructure } from './models/DataStructure.js';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
 async function run() {
-  const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/visualgo';
-  await mongoose.connect(MONGODB_URI);
-  console.log('Connected for seeding');
-  // We are already inside /server as cwd, so seed directory is just 'seed'
-  const seedPath = path.resolve(process.cwd(), 'seed', 'data-structures.json');
+  const MONGODB_URI = process.env.MONGODB_URI;
+
+  if (!MONGODB_URI) {
+    console.error(
+      'MONGODB_URI is not set. Create server/.env with your connection string (local or Atlas).\n' +
+        'Example: MONGODB_URI=mongodb://localhost:27017/visualgo'
+    );
+    process.exit(1);
+  }
+
+  try {
+    await mongoose.connect(MONGODB_URI);
+    console.log('Connected for seeding');
+  } catch (err) {
+    console.error('Failed to connect to MongoDB.');
+    console.error(String(err?.message || err));
+    console.error(
+      'Tips: Ensure MongoDB is running locally or use a MongoDB Atlas connection string in server/.env.'
+    );
+    process.exit(1);
+  }
+
+  const __dirname = path.dirname(fileURLToPath(import.meta.url));
+  const seedPath = path.resolve(__dirname, '../seed/data-structures.json');
   const raw = fs.readFileSync(seedPath, 'utf-8');
   const items = JSON.parse(raw);
 
