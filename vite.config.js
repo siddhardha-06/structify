@@ -26,7 +26,7 @@ export default defineConfig({
     host: 'localhost',
     proxy: {
       '/api': {
-        target: 'http://localhost:4000',
+        target: 'https://webtech-jackfruit-production.up.railway.app',
         changeOrigin: true,
         secure: false,
       },
