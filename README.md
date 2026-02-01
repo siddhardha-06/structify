@@ -2,6 +2,10 @@
 
 Interactive data structure visualizers (Array, Linked List, Queue, Stack, Binary Tree, BST) with animated backgrounds (Ballpit & Aurora) plus a backend serving code snippets (C language initially).
 
+hosted webpage:
+https://structify-visualizer.vercel.app/
+
+Instructions to run locally:
 ## Frontend (Vite + React)
 
 Scripts:
